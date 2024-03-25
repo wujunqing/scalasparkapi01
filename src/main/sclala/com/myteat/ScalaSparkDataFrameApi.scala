@@ -78,7 +78,7 @@ object ScalaSparkDataFrameApi {
     frame.foreach(println)
 
     val frame2 = ScalaSparkDataFrameApi.sqlApi( "data/data2.txt", 3)
-    frame.foreach(println)
+    frame2.foreach(println)
 
 
   }
