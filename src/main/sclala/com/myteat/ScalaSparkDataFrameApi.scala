@@ -40,8 +40,6 @@ object ScalaSparkDataFrameApi {
         """
                     select peer_id
                           ,year
-                          ,v_count
-                          ,v_count+v_sum
                     from (
                     select peer_id
                           ,year
