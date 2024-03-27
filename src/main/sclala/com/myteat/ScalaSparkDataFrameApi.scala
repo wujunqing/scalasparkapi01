@@ -7,13 +7,13 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 
-object ScalaSparkDataFrameApi {
+class ScalaSparkDataFrameApi {
 
 
-  def sqlApi(path:String,number: Number):List[Row] = {
+  def sqlApi(path:String,sql:String):List[Row] = {
 
-   if(path==null||number==null) {
-     println("path:"+path+"number:"+number)
+   if(path==null||sql==null) {
+     println("path:"+path+"sql:"+sql)
      return null
    }
 
@@ -36,6 +36,24 @@ object ScalaSparkDataFrameApi {
 
       df.createTempView("v_table")
 
+
+
+      val frame: DataFrame = spark.sql(sql.stripMargin)
+
+      val list: List[Row]= frame.collect().toList
+
+
+      spark.stop()
+      return list
+
+    }
+
+
+  }
+}
+  object  RumApi {
+    def main(args: Array[String]): Unit = {
+      val api = new ScalaSparkDataFrameApi()
       var sql = String.format(
         """
                     select peer_id
@@ -56,33 +74,18 @@ object ScalaSparkDataFrameApi {
                          group by peer_id,year
                        ) aa
                        ) bb where 1=1 and v_count+v_sum>=%s order by peer_id,year desc
-                      """, number)
+                      """, "3")
+      val frame = api.sqlApi("data/data.txt",sql)
+      frame.foreach(println)
+      //    print("----------")
+      //    val frame2 = ScalaSparkDataFrameApi.sqlApi( "data/data2.txt", 5)
+      //    frame2.foreach(println)
+      //    print("----------")
+      //    val frame3 = ScalaSparkDataFrameApi.sqlApi( "data/data2.txt", 7)
+      //    frame3.foreach(println)
 
-      val frame: DataFrame = spark.sql(sql.stripMargin)
-
-      val list: List[Row]= frame.collect().toList
-
-
-      spark.stop()
-      return list
 
     }
-
-
-  }
-  def main(args: Array[String]): Unit = {
-
-    val frame = ScalaSparkDataFrameApi.sqlApi( "data/data.txt", 3)
-    frame.foreach(println)
-//    print("----------")
-//    val frame2 = ScalaSparkDataFrameApi.sqlApi( "data/data2.txt", 5)
-//    frame2.foreach(println)
-//    print("----------")
-//    val frame3 = ScalaSparkDataFrameApi.sqlApi( "data/data2.txt", 7)
-//    frame3.foreach(println)
-
-
-
   }
 
-}
+
