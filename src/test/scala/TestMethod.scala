@@ -11,12 +11,8 @@ import scala.collection.immutable.Set
 
 
 class TestMethod extends AnyFlatSpec {
-
-  behavior of "list have 3 row"
-    it should "list.size have 3" in  {
-
-      val api = new ScalaSparkDataFrameApi()
-      var sql = String.format("""
+  val api = new ScalaSparkDataFrameApi()
+  var sql = String.format("""
                     select peer_id
                           ,year
                     from (
@@ -36,17 +32,18 @@ class TestMethod extends AnyFlatSpec {
                        ) aa
                        ) bb where 1=1 and v_count+v_sum>=%s order by peer_id,year desc
                       """, "3")
-            val list = api.sqlApi("data/data.txt",sql)
-            println(list.size)
-            assert(list.size===3)
+  val list = api.sqlApi("data/data.txt",sql)
 
-      it should "produce NoSuchElementException when head is invoked" in {
+  behavior of "list have 3 row"
+    it should "list.size have 3" in {
+      assert(list.size === 3)
+    }
+    it should  "list don't have 3 row" in {
         assertThrows[Exception] {
           list.size
         }
+    }
 
-        }
-      }
 
 
 

@@ -3,4 +3,8 @@ ScalaSparkDataFrameApi.sqlApi
 
 
 # testrun pdf
-testspark0.2\ScalaSparkDataFrameApiTest.pdf
+ScalaSparkDataFrameApiTest.pdf
+
+
+# scalatest unit test
+test\scala\TestMethod

@@ -1,9 +1,4 @@
-package com.myteat
-
-import org.apache.spark.SparkConf
-import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
-import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+import com.myteat.ScalaSparkDataFrameApi
 
 object TestSpark {
 
@@ -67,9 +62,12 @@ object TestSpark {
 
     val api = new ScalaSparkDataFrameApi()
     val step1 = api.sqlApi("data/data.txt", step1sql)
+    println("step1 is ====")
     step1.foreach(println)
     val step2 = api.sqlApi("data/data.txt", step2sql)
+    println("step2 is ====")
     step2.foreach(println)
+    println("step3 is ====")
     val step3 = api.sqlApi("data/data.txt", step3sql)
     step3.foreach(println)
 
