@@ -40,7 +40,7 @@ class TestMethod extends AnyFlatSpec {
     }
     it should  "list don't have 3 row" in {
         assertThrows[Exception] {
-          list.size
+          "list.size is :"+list.size
         }
     }
 
